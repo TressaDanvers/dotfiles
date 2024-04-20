@@ -1,0 +1,67 @@
+#!/bin/zsh
+
+## zsh
+zstyle ':completion:*' menu select
+
+# zsh-completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+autoload -U -z compinit && compinit
+zmodload -i zsh/complist
+
+# keybinds
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
+# prompt
+. $XDG_CONFIG_HOME/zsh/prompt.sh
+
+## history
+setopt histignorealldups sharehistory
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=$XDG_CACHE_HOME/shell-history
+
+## color
+noglob alias ls="ls --ignore='\$??*' --color=tty --group-directories-first"
+eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
+
+alias neofetch="neofetch --ascii_colors 1 15 --colors 15 1 1 1 15"
+
+## alias
+alias la='ls -a'
+alias ll='ls -l'
+alias tre2="tree -L 2"
+
+alias sudo="sudo "
+alias apt="nala"
+alias sudo-gui='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
+
+## tmux
+alias tkill="tmux kill-session -t"
+
+alias topen="tmux attach-session -t"
+alias tnew="tmux new-session -s"
+
+# tmux in new window
+alias topen+="kitty --detach tmux attach-session -t"
+function tnew+() {
+	if tnew $1 -d; then topen+ $1; fi
+}
+
+## zoxide
+eval "$(zoxide init zsh)"
+alias cd=z
+alias cdi=zi
+
+## atuin
+eval "$(atuin init zsh)"
+
+## command-not-found
+command_not_found_handler() {
+	command-not-found $1
+	return 127
+}
+
+## first prompt
+neofetch
