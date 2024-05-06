@@ -1,0 +1,2 @@
+# load env
+if [ -f $HOME/.env ]; then . $HOME/.env; fi
