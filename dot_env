@@ -53,5 +53,8 @@ export QT_STYLE_OVERRIDE=qt5ct-style
 # zsh
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
+# python
+prepend_to_path $XDG_DATA_HOME/venv/bin
+
 ## teardown
 unset -f prepend_to_path append_to_path

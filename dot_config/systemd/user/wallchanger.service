@@ -1,0 +1,11 @@
+[Unit]
+Description=Change desktop wallpaper(s)
+
+[Service]
+Type=oneshot
+Environment='DISPLAY=:0'
+Environment='XAUTHORITY=%h/.Xauthority'
+ExecStart=/bin/bash -c 'HOME=%h; . $HOME/.env; feh --no-fehbg --bg-fill -z $XDG_DATA_HOME/backgrounds'
+
+[Install]
+WantedBy=xorg.target

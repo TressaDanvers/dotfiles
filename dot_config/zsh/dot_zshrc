@@ -26,7 +26,10 @@ HISTFILE=$XDG_CACHE_HOME/shell-history
 noglob alias ls="ls --ignore='\$??*' --color=tty --group-directories-first"
 eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
 
-alias neofetch="neofetch --ascii_colors 1 15 --colors 15 1 1 1 15"
+alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"
+
+(cat $XDG_CACHE_HOME/wal/sequences &)
+. $XDG_CACHE_HOME/wal/colors-tty.sh
 
 ## alias
 alias la='ls -a'
@@ -35,7 +38,7 @@ alias tre2="tree -L 2"
 
 alias sudo="sudo "
 alias apt="nala"
-alias sudo-gui='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
+alias xsudo='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
 
 ## tmux
 alias tkill="tmux kill-session -t"
@@ -62,6 +65,3 @@ command_not_found_handler() {
 	command-not-found $1
 	return 127
 }
-
-## first prompt
-neofetch

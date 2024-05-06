@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 setopt PROMPT_SUBST
 
 function _prwd() {
@@ -19,7 +19,7 @@ function _pgit() {
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
     BRANCH=$(git symbolic-ref HEAD | cut -d'/' -f3)
     if [ -n "$(git status --porcelain)" ]; then
-      echo '─[ %F{yellow}'$BRANCH'%f%F{red}*%f ]'
+      echo '─[ %F{yellow}'$BRANCH'%f%F{green}*%f ]'
     else
       echo '─[ %F{yellow}'$BRANCH'%f ]'
     fi
@@ -28,4 +28,4 @@ function _pgit() {
   fi
 }
 
-PS1="╭─%B[ %n%F{red}@%f%m ]─[ "$'$(_prwd)'" ]"$'$(_pgit)'"%b"$'\n'"╰─$ "
+PS1="╭─%B[ %n%F{green}@%f%m ]─[ "$'$(_prwd)'" ]"$'$(_pgit)'"%b"$'\n'"╰─$ "
