@@ -1,0 +1,100 @@
+#!/bin/bash
+
+## interactive shells only
+case $- in
+    *i*) ;;
+      *) return ;;
+esac
+
+## current terminal
+TERMINAL=$(basename "/"$(ps -o cmd -f -p $(cat /proc/$(echo $$)/stat | cut -d \  -f 4) | tail -1 | sed 's/ .*$//'))
+
+## bash
+shopt -s checkwinsize
+shopt -s globstar
+shopt -s expand_aliases
+
+# bash-completions
+if ! shopt -oq posix; then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
+fi
+
+# prompt
+. $XDG_CONFIG_HOME/bash/prompt.sh
+
+## history
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTFILE=$XDG_CACHE_HOME/shell-history
+
+## color
+eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
+
+alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+if [ -f $XDG_CACHE_HOME/wal/sequences ]; then (cat $XDG_CACHE_HOME/wal/sequences &); fi
+if [ -f $XDG_CACHE_HOME/wal/colors-tty.sh ]; then . $XDG_CACHE_HOME/wal/colors-tty.sh; fi
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+## aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+if ! [ "$(which tree)" == "" ]; then alias tre2="tree -L 2"; fi
+
+if ! [ "$(which sudo)" == "" ]; then alias sudo="sudo "; fi
+if ! [ "$(which nala)" == "" ]; then alias apt="nala"; fi
+alias xsudo='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
+
+## tmux
+if ! [ "$(which tmux)" == "" ]; then
+	alias tkill="tmux kill-session -t"
+
+	alias topen="tmux attach-session -t"
+	alias tnew="tmux new-session -s"
+
+	# tmux in new window
+	case $TERMINAL in
+		(gnome-terminal*) TOPENPLUS="gnome-terminal -- tmux attach-session -t" ;;
+		(kitty) TOPENPLUS="kitty --detach tmux attach-session -t" ;;
+	esac
+	alias topen+="$TOPENPLUS"
+	_tnewplus() {
+		if tmux new-session -s $1 -d; then $TOPENPLUS $1; fi
+	}
+	export -f _tnewplus
+	alias tnew+=_tnewplus
+fi
+
+## zoxide
+if ! [ "$(which zoxide)" == "" ]; then
+	eval "$(zoxide init zsh)"
+	alias cd=z
+	alias cdi=zi
+fi
+
+## atuin
+if ! [ "$(which atuin)" == "" ]; then
+	eval "$(atuin init zsh)"
+fi
+
+## command-not-found
+if ! [ "$(which command-not-found)" == "" ]; then
+	command_not_found_handler() {
+		command-not-found $1
+		return 127
+	}
+fi
+
+## lesspipe
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

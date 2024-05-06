@@ -31,9 +31,12 @@ alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"
 (cat $XDG_CACHE_HOME/wal/sequences &)
 . $XDG_CACHE_HOME/wal/colors-tty.sh
 
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 ## alias
 alias la='ls -a'
 alias ll='ls -l'
+alias l='ls -CF'
 alias tre2="tree -L 2"
 
 alias sudo="sudo "
@@ -65,3 +68,6 @@ command_not_found_handler() {
 	command-not-found $1
 	return 127
 }
+
+## lesspipe
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
