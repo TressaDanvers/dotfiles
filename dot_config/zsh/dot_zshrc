@@ -43,6 +43,8 @@ alias sudo="sudo "
 alias apt="nala"
 alias xsudo='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
 
+alias reload-zsh=". $XDG_CONFIG_HOME/zsh/.zshrc"
+
 ## tmux
 alias tkill="tmux kill-session -t"
 
