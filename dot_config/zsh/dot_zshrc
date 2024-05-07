@@ -29,7 +29,6 @@ SAVEHIST=1000
 HISTFILE=$XDG_CACHE_HOME/shell-history
 
 ## color
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 noglob alias ls="ls --ignore='\$??*' --color=tty --group-directories-first"

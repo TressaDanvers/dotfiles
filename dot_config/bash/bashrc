@@ -31,9 +31,9 @@ HISTFILESIZE=2000
 HISTFILE=$XDG_CACHE_HOME/shell-history
 
 ## color
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+alias ls="ls --ignore='"'$??*'"' --color=tty --group-directories-first"
 eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
 
 if ! [ "$(which neofetch)" == "" ]; then alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"; fi
