@@ -2,4 +2,4 @@
 if [ -f $HOME/.env ]; then . $HOME/.env; fi
 
 # colors
-if ! [ "$(which wal)" == "" ]; then wal -i $XDG_DATA_HOME/backgrounds/"wallpaper-1.*" -n; fi
+! wal -i $XDG_DATA_HOME/backgrounds/wallpaper-1.png -n

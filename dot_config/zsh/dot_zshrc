@@ -1,5 +1,11 @@
 #!/bin/zsh
 
+## interactive shells only
+case $- in
+	*i*) ;;
+	*) return ;;
+esac
+
 ## zsh
 zstyle ':completion:*' menu select
 
@@ -23,13 +29,16 @@ SAVEHIST=1000
 HISTFILE=$XDG_CACHE_HOME/shell-history
 
 ## color
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
 noglob alias ls="ls --ignore='\$??*' --color=tty --group-directories-first"
 eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
 
-alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"
+if ! [ "$(which neofetch)" = "" ]; then alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"; fi
 
-(cat $XDG_CACHE_HOME/wal/sequences &)
-. $XDG_CACHE_HOME/wal/colors-tty.sh
+if [ -f $XDG_CACHE_HOME/wal/sequences ]; then (cat $XDG_CACHE_HOME/wal/sequences &); fi
+if [ -f $XDG_CACHE_HOME/wal/colors-tty.sh ]; then . $XDG_CACHE_HOME/wal/colors-tty.sh; fi
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
@@ -37,39 +46,50 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias la='ls -a'
 alias ll='ls -l'
 alias l='ls -CF'
-alias tre2="tree -L 2"
+if ! [ "$(which tree)" = "" ]; then alias tre2="tree -L 2"; fi
 
-alias sudo="sudo "
-alias apt="nala"
+if ! [ "$(which sudo)" = "" ]; then alias sudo="sudo "; fi
+if ! [ "$(which nala)" = "" ]; then alias apt="nala"; fi
 alias xsudo='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY'
 
-alias reload-zsh=". $XDG_CONFIG_HOME/zsh/.zshrc"
-
 ## tmux
-alias tkill="tmux kill-session -t"
+if ! [ "$(which tmux)" = "" ]; then
+	alias tkill="tmux kill-session -t"
 
-alias topen="tmux attach-session -t"
-alias tnew="tmux new-session -s"
+	alias topen="tmux attach-session -t"
+	alias tnew="tmux new-session -s"
 
-# tmux in new window
-alias topen+="kitty --detach tmux attach-session -t"
+	# tmux in new window
+	case $TERM in
+	  *-kitty) alias topen+='kitty --detach tmux attach-session -t' ;;
+	  *) alias topen+='gnome-terminal -- tmux attach-session -t' ;;
+	esac
+fi
+
 function tnew+() {
 	if tnew $1 -d; then topen+ $1; fi
 }
 
+if [ "$(which tmux)" = "" ]; then unset -f tnew+; fi
+
 ## zoxide
-eval "$(zoxide init zsh)"
-alias cd=z
-alias cdi=zi
+if ! [ "$(which zoxide)" = "" ]; then
+  eval "$(zoxide init zsh)"
+  alias cd=z
+  alias cdi=zi
+fi
 
 ## atuin
-eval "$(atuin init zsh)"
+if ! [ "$(which atuin)" = "" ]; then
+  eval "$(atuin init zsh)"
+fi
 
 ## command-not-found
 command_not_found_handler() {
-	command-not-found $1
-	return 127
+  command-not-found $1
+  return 127
 }
+if [ "$(which command-not-found)" = "" ]; then unset -f command_not_found_handler; fi
 
 ## lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

@@ -2,12 +2,9 @@
 
 ## interactive shells only
 case $- in
-    *i*) ;;
-      *) return ;;
+	*i*) ;;
+	*) return ;;
 esac
-
-## current terminal
-TERMINAL=$(basename "/"$(ps -o cmd -f -p $(cat /proc/$(echo $$)/stat | cut -d \  -f 4) | tail -1 | sed 's/ .*$//'))
 
 ## bash
 shopt -s checkwinsize
@@ -34,12 +31,12 @@ HISTFILESIZE=2000
 HISTFILE=$XDG_CACHE_HOME/shell-history
 
 ## color
-eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
-
-alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"
-
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
+eval $(dircolors -b $XDG_CONFIG_HOME/dircolors)
+
+if ! [ "$(which neofetch)" == "" ]; then alias neofetch="neofetch --ascii_colors 2 15 --colors 15 2 2 2 15"; fi
 
 if [ -f $XDG_CACHE_HOME/wal/sequences ]; then (cat $XDG_CACHE_HOME/wal/sequences &); fi
 if [ -f $XDG_CACHE_HOME/wal/colors-tty.sh ]; then . $XDG_CACHE_HOME/wal/colors-tty.sh; fi
@@ -64,36 +61,34 @@ if ! [ "$(which tmux)" == "" ]; then
 	alias tnew="tmux new-session -s"
 
 	# tmux in new window
-	case $TERMINAL in
-		(gnome-terminal*) TOPENPLUS="gnome-terminal -- tmux attach-session -t" ;;
-		(kitty) TOPENPLUS="kitty --detach tmux attach-session -t" ;;
+	case $TERM in
+		*-kitty) alias topen+="kitty --detach tmux attach-session -t" ;;
+		*) alias topen+="gnome-terminal -- tmux attach-session -t" ;;
 	esac
-	alias topen+="$TOPENPLUS"
-	_tnewplus() {
-		if tmux new-session -s $1 -d; then $TOPENPLUS $1; fi
-	}
+fi
+
+function _tnewplus() {
+	if tnew $1 -d; then topen+ $1; fi
+}
+
+if ! [ "$(which tmux)" == "" ]; then
 	export -f _tnewplus
 	alias tnew+=_tnewplus
+else
+	unset -f _tnewplus
 fi
 
 ## zoxide
 if ! [ "$(which zoxide)" == "" ]; then
-	eval "$(zoxide init zsh)"
+	eval "$(zoxide init bash)"
 	alias cd=z
 	alias cdi=zi
 fi
 
 ## atuin
 if ! [ "$(which atuin)" == "" ]; then
-	eval "$(atuin init zsh)"
-fi
-
-## command-not-found
-if ! [ "$(which command-not-found)" == "" ]; then
-	command_not_found_handler() {
-		command-not-found $1
-		return 127
-	}
+	. $XDG_CONFIG_HOME/bash/bash-preexec.sh
+	eval "$(atuin init bash)"
 fi
 
 ## lesspipe
