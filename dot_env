@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export ENV=$HOME/.env
+
 ## setup
 # util
 prepend_to_path() {
@@ -28,6 +30,10 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$UID}
+
+# prompt
+export PS1="╭─[ $(whoami)@$(uname -n) ]
+╰─\$ "
 
 # path
 prepend_to_path $LOCAL_PATH

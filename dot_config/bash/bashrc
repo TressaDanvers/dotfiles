@@ -47,6 +47,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias dash='rlwrap dash'
+
 if ! [ "$(which tree)" == "" ]; then alias tre2="tree -L 2"; fi
 
 if ! [ "$(which sudo)" == "" ]; then alias sudo="sudo "; fi
@@ -89,6 +92,11 @@ fi
 if ! [ "$(which atuin)" == "" ]; then
 	. $XDG_CONFIG_HOME/bash/bash-preexec.sh
 	eval "$(atuin init bash)"
+fi
+
+## chezmoi
+if ! [ "$(which chezmoi)" == "" ]; then
+  eval "$(chezmoi completion bash)"
 fi
 
 ## lesspipe
