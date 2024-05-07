@@ -1,66 +1,68 @@
 #!/bin/sh
 
-export ENV=$HOME/.env
-
 ## setup
 # util
 prepend_to_path() {
-  if [ -d $1 ]; then
-    case :$PATH: in
-      *:$1:*)  ;;
-      *) export PATH=$1:$PATH ;;
-    esac
-  fi
+	if [ -d $1 ]; then
+		case :$PATH: in
+			*:$1:*)  ;;
+			*) export PATH=$1:$PATH ;;
+		esac
+	fi
 }
 
 append_to_path() {
-  if [ -d $1 ]; then
-    case :$PATH: in
-      *:$1:*)  ;;
-      *) export PATH=$PATH:$1 ;;
-    esac
-  fi
+	if [ -d $1 ]; then
+		case :$PATH: in
+			*:$1:*)  ;;
+			*) export PATH=$PATH:$1 ;;
+		esac
+	fi
 }
 
-## env
-# base
-export LOCAL_PATH=${LOCAL_PATH_HOME:-$HOME/.local/bin}
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
-export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
-export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$UID}
+if ! [ $ENV = $HOME/.env ]; then
+	export ENV=$HOME/.env
+
+	## env
+	# base
+	export LOCAL_PATH=${LOCAL_PATH_HOME:-$HOME/.local/bin}
+	export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+	export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+	export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+	export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+	export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$UID}
+
+	# path
+	prepend_to_path $LOCAL_PATH
+
+	# go
+	append_to_path /usr/local/go/bin
+
+	# rust
+	append_to_path $XDG_DATA_HOME/cargo/bin
+
+	# android sdk
+	export ANDROID_SDK_HOME=$HOME/.android/sdk/
+
+	# gradle
+	export GRADLE_USER_HOME=$HOME/.android/sdk/.gradle
+
+	# r
+	export R_LIBS_USER=$XDG_DATA_HOME/r/%p-library/%v
+
+	# qt
+	export QT_STYLE_OVERRIDE=qt5ct-style
+
+	# zsh
+	export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+	# python
+	prepend_to_path $XDG_DATA_HOME/venv/bin
+fi
 
 # prompt
 export PS1="╭─[ $(whoami)@$(uname -n) ]
 ╰─\$ "
-
-# path
-prepend_to_path $LOCAL_PATH
-
-# go
-append_to_path /usr/local/go/bin
-
-# rust
-append_to_path $XDG_DATA_HOME/cargo/bin
-
-# android sdk
-export ANDROID_SDK_HOME=$HOME/.android/sdk/
-
-# gradle
-export GRADLE_USER_HOME=$HOME/.android/sdk/.gradle
-
-# r
-export R_LIBS_USER=$XDG_DATA_HOME/r/%p-library/%v
-
-# qt
-export QT_STYLE_OVERRIDE=qt5ct-style
-
-# zsh
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
-
-# python
-prepend_to_path $XDG_DATA_HOME/venv/bin
 
 ## teardown
 unset -f prepend_to_path append_to_path
