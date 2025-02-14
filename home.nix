@@ -10,7 +10,7 @@ in {
   home = {
     username = "tressa";
     homeDirectory = "${home}";
-    packages = with pkgs; [ tree ];
+    packages = with pkgs; [ tree gnome-console ];
     file = {};
     sessionVariables = {
       EDITOR = "nano";
