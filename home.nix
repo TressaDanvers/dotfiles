@@ -77,7 +77,6 @@ in {
       dotDir = "${config_home}/zsh";
       enableCompletion = true;
       history = {
-        append = true;
         ignoreAllDups = true;
         path = "${state_home}/zsh/history";
         share = true;
