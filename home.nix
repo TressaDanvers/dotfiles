@@ -21,7 +21,10 @@ in {
       dconf-editor
       gnome-console
       gnome-tweaks
-    ];
+    ] ++ (with gnomeExtensions; [
+      # Shell Extensions
+      alphabetical-app-grid      
+    ]);
 
     file = {};
     sessionVariables = {
