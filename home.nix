@@ -93,4 +93,6 @@ in {
       syntaxHighlighting.enable = true;
     };
   };
+
+  targets.genericLinux.enable = true;
 }
