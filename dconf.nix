@@ -2,7 +2,8 @@
   dconf = {
     enable = true;
     settings = {
-      # Desktop
+      # Applications
+      "org/gnome/shell".favorite-apps = [];
       "org/gnome/desktop/app-folders".folder-children = [];
     };
   };
