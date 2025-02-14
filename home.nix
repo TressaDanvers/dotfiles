@@ -65,7 +65,7 @@ in {
     bash = {
       enable = true;
       enableCompletion = true;
-      historyFile = "${state_home}/bash/history";
+      historyFile = "${home}/${state_home}/bash/history";
       initExtra = ''
         esc=$(printf "\e")
         Fgreen="$esc[32m"
@@ -89,9 +89,9 @@ in {
       enableCompletion = true;
       history = {
         extended = true;
-        ignoreDups = true;
+        ignoreAllDups = true;
         ignoreSpace = false;
-        path = "${state_home}/zsh/history";
+        path = "${home}/${state_home}/zsh/history";
         share = true;
         size = 10000;
       };
