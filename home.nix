@@ -6,6 +6,7 @@
   state_home = ".local/state";
   bin_home = ".local/bin";
 in {
+  imports = [ ./dconf.nix ];
 
   home = {
     username = "tressa";
