@@ -10,7 +10,18 @@ in {
   home = {
     username = "tressa";
     homeDirectory = "${home}";
-    packages = with pkgs; [ tree gnome-console ];
+
+    packages = with pkgs; [
+      # CLI Utilities
+      tree
+      # GUI Applications
+      epiphany
+      # GUI Utilities
+      dconf-editor
+      gnome-console
+      gnome-tweaks
+    ];
+
     file = {};
     sessionVariables = {
       EDITOR = "nano";
