@@ -15,6 +15,7 @@ in {
     packages = with pkgs; [
       # CLI Utilities
       tree
+      dconf2nix
       # GUI Applications
       epiphany
       floorp
@@ -22,9 +23,20 @@ in {
       dconf-editor
       gnome-console
       gnome-tweaks
+      # Theme
+      adw-gtk3
+      bibata-cursors
+      morewaita-icon-theme
     ] ++ (with gnomeExtensions; [
       # Shell Extensions
-      alphabetical-app-grid      
+      alphabetical-app-grid
+      blur-my-shell
+      dm-theme-changer
+      just-perfection
+      night-theme-switcher
+      panel-corners
+      rounded-corners
+      rounded-window-corners-reborn
     ]);
 
     file = {};
@@ -60,6 +72,10 @@ in {
 
     git = {
       enable = true;
+
+      aliases = {
+      };
+
       userEmail = "TDanvers@protonmail.ch";
       userName = "Tressa Danvers";
     };
@@ -107,6 +123,10 @@ in {
       '';
       shellAliases = {
         "ff" = ''clear; fastfetch'';
+        "git-stage"=''git add *; git commit -m "staged"'';
+        "git-restage"=''git reset --soft HEAD~; git add *; git commit -m "staged"'';
+        "git-deploy-staged"=''git reset --soft HEAD~; git add *; git commit -m'';
+        "switch-nix-home"=''home-manager switch --flake ~/.config/home-manager#tressa'';
       };
       syntaxHighlighting.enable = true;
     };
