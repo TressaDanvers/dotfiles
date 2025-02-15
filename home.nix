@@ -17,6 +17,7 @@ in {
       tree
       # GUI Applications
       epiphany
+      floorp
       # GUI Utilities
       dconf-editor
       gnome-console
