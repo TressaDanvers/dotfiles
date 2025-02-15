@@ -17,6 +17,12 @@
       "org/gnome/shell".disable-user-extensions = false;
       "org/gnome/shell".disabled-extensions = [];
       "org/gnome/shell".enabled-extensions = [ "AlphabeticalAppGrid@stuarthayhurst" ];
+
+      ## AlphabeticalAppGrid
+      "org/gnome/shell/extensions/alphabetical-app-grid" = {
+        folder-order-position = "start";
+        sort-folder-contents = true;
+      };
     };
   };
 }
