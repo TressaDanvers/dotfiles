@@ -98,7 +98,7 @@ in {
         f="$esc[39m"
         B="$esc[01m"
         b="$esc[22m"
-        PS1=$B'[ '$Fgreen'\u'$f'@'$Fyellow'\h'$f' ]-[ '$Fblue'\w'$f' ]'$b'\n\$ '
+        PS1=$B'[ '$Fgreen'\u'$f'@'$Fyellow'\h'$f' ]-[ '$Fblue'\W'$f' ]'$b'\n\$ '
         unset esc Fred Fyellow Fblue f B b
       '';
       shellAliases = {
