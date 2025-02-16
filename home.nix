@@ -102,6 +102,7 @@ in {
         unset esc Fred Fyellow Fblue f B b
       '';
       shellAliases = {
+        "ls" = ''ls --color --group-directories-first'';
         "ff" = ''clear; fastfetch'';
       };
     };
@@ -125,6 +126,7 @@ in {
         unset newl;
       '';
       shellAliases = {
+        "ls" = ''ls --color --group-directories-first'';
         "ff" = ''clear; fastfetch'';
         "git-stage"=''git add *; git commit -m "staged"'';
         "git-restage"=''git reset --soft HEAD~; git add *; git commit -m "staged"'';
