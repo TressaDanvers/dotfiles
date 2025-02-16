@@ -17,6 +17,8 @@ in {
       dconf2nix
       tree
       wget
+      # Devel
+      exercism
       # GUI Applications
       epiphany
       floorp
