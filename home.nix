@@ -14,8 +14,9 @@ in {
 
     packages = with pkgs; [
       # CLI Utilities
-      tree
       dconf2nix
+      tree
+      wget
       # GUI Applications
       epiphany
       floorp
