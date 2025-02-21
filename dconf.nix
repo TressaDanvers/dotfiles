@@ -73,7 +73,7 @@ in {
         manual-schedule = true;
         nighttime-binding = [ "" ];
         sunrise = 6.0;
-        sunset = 20.0;
+        sunset = 18.0;
       };
       "org/gnome/shell/extensions/nightthemeswitcher/commands" = {
         enabled = false;
